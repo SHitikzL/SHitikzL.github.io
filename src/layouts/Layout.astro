@@ -1,0 +1,70 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+    description?: string;
+}
+
+const { title, description = "Calm Psychology Violet - Личный психолог" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+        <script is:inline>
+            // Theme initialization script to prevent flash
+            const theme = (() => {
+                if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                    return localStorage.getItem('theme');
+                }
+                return 'light';
+            })();
+            
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        </script>
+	</head>
+	<body data-theme="light">
+		<Header />
+		<slot />
+		<Footer />
+
+        <script>
+            // Theme toggle logic
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (themeToggle && themeIcon) {
+                const setTheme = (theme: string) => {
+                    document.body.setAttribute('data-theme', theme);
+                    document.documentElement.setAttribute('data-theme', theme);
+                    themeIcon.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
+                    localStorage.setItem('theme', theme);
+                }
+
+                themeToggle.addEventListener('click', () => {
+                    const currentTheme = document.body.getAttribute('data-theme') || 'light';
+                    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+                });
+
+                // Set initial icon state on mount
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                themeIcon.textContent = savedTheme === 'dark' ? 'light_mode' : 'dark_mode';
+                document.body.setAttribute('data-theme', savedTheme);
+            }
+        </script>
+	</body>
+</html>
