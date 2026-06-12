@@ -1,8 +1,0 @@
-{
-  "name": "Calm Psychology Violet - Astro",
-  "description": "Персональный сайт психолога, реализованный на Astro 6.x с модульной структурой, поддержкой темной темы и нативным CSS.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}

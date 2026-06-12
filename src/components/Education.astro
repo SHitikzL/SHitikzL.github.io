@@ -1,0 +1,65 @@
+---
+import diploma1 from "../assets/images/diploma.jpg";
+import diploma2 from "../assets/images/diploma-supplement.jpg";
+import diploma3 from "../assets/images/diploma-disciplines.jpg";
+import hero from "../assets/images/psychologist-with-a-diploma.jpg";
+
+import EducationGallery from "./EducationGallery.astro";
+
+const images = [
+  {
+    image: diploma1,
+    alt: "Диплом",
+  },
+  {
+    image: diploma2,
+    alt: "Приложение к диплому",
+  },
+  {
+    image: diploma3,
+    alt: "Список изученных дисциплин",
+  },
+  {
+    image: hero,
+    alt: "Фото с дипломом",
+  },
+];
+---
+
+<section
+  id="education"
+  class="section"
+  style="background: var(--surface-container-low);"
+>
+  <div class="container">
+    <h2>Образование и квалификация</h2>
+
+    <div class="education-text">
+      <p>
+        По завершению обучения по программе «Психологическое консультирование по
+        методике PSY2.0» (1100 академических часов) в ООО «Наука ПСИ2.0» в
+        2024–2026 гг. получила диплом о профессиональной переподготовке.
+      </p>
+      <br />
+      <p>
+        Специализация включает работу с психосоматическими запросами,
+        эмоциональными состояниями, личностными и семейными вопросами, а также
+        сопровождение клиентов на пути к восстановлению психологического и
+        физического благополучия.
+      </p>
+    </div>
+
+    <EducationGallery images={images} />
+  </div>
+</section>
+
+<style>
+  .education-text {
+    max-width: 800px;
+    margin-bottom: 2rem;
+  }
+  .education-text p {
+    /* font-size: 1.125rem; */
+    color: var(--on-surface-variant);
+  }
+</style>

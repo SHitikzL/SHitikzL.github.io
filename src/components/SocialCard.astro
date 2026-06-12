@@ -1,74 +1,82 @@
 ---
+import type { SvgComponent } from "astro/types";
+import { Image } from "astro:assets";
+
 interface Props {
-    icon: string;
-    title: string;
-    login: string;
-    description: string;
-    href: string;
+  icon: SvgComponent;
+  title: string;
+  login: string;
+  // description: string;
+  href: string;
 }
 
-const { icon, title, login, description, href } = Astro.props;
+const { icon: Icon, title, login, href } = Astro.props;
 ---
-<a href={href} class="social-card">
-    <div class="social-card-icon"><span class="material-icons">{icon}</span></div>
-    <div class="social-card-info">
-        <h4>{title}</h4>
-        <span class="social-card-login">{login}</span>
-        <p class="social-card-desc">{description}</p>
-    </div>
+
+<a href={href} class="social-card" target="_blank" rel="noopener">
+  <div class="social-card-icon">
+    <Icon />
+  </div>
+  <div class="social-card-info">
+    <h4>{title}</h4>
+    <span class="social-card-login">{login}</span>
+    <!-- <p class="social-card-desc">{description}</p> -->
+  </div>
 </a>
 
 <style>
-    .social-card {
-        background: var(--surface-container-low);
-        border: 1px solid var(--outline-variant);
-        border-radius: var(--radius-lg);
-        padding: var(--spacing-md);
-        display: flex;
-        align-items: flex-start;
-        gap: var(--spacing-md);
-        transition: var(--transition);
-        cursor: pointer;
-        text-decoration: none;
-        color: inherit;
-    }
+  .social-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
 
-    .social-card:hover {
-        background: var(--surface-container-lowest);
-        border-color: var(--primary);
-        transform: translateY(-4px);
-        box-shadow: 0 10px 20px var(--shadow-color);
-    }
+  .social-card:hover {
+    background: var(--surface-container-lowest);
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px var(--shadow-color);
+  }
 
-    .social-card-icon {
-        width: 48px;
-        height: 48px;
-        background: var(--primary-container);
-        color: var(--on-primary);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
+  .social-card-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--primary-container);
+    color: var(--on-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
 
-    .social-card-info h4 {
-        font-size: 1.125rem;
-        margin-bottom: 2px;
-        color: var(--on-surface);
-    }
+  .social-card-info h4 {
+    font-size: 1.125rem;
+    margin-bottom: 2px;
+    color: var(--on-surface);
+  }
 
-    .social-card-login {
-        font-weight: 600;
-        color: var(--primary);
-        font-size: 0.875rem;
-        display: block;
-        margin-bottom: 4px;
-    }
+  .social-card-login {
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 0.875rem;
+    display: block;
+    margin-bottom: 4px;
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
 
-    .social-card-desc {
-        font-size: 0.875rem;
-        color: var(--on-surface-variant);
-        line-height: 1.4;
-    }
+  .social-card-desc {
+    font-size: 0.875rem;
+    color: var(--on-surface-variant);
+    line-height: 1.4;
+  }
 </style>

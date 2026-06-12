@@ -1,109 +1,274 @@
 ---
+import DarkModeIcon from "../assets/icons/moon.svg";
+import LightModeIcon from "../assets/icons/brightness-up.svg";
+import MenuIcon from "../assets/icons/menu-2.svg";
+import PlantIcon from "../assets/icons/plant-2.svg";
 ---
+
 <header class="header">
-    <div class="container">
-        <a href="/" class="logo">
-            <span class="material-icons">spa</span>
-            <span>Calm Psychology Violet</span>
-        </a>
-        <nav class="nav">
-            <a href="/" class="nav-link">Главная</a>
-            <a href="/#education" class="nav-link">Образование</a>
-            <a href="/blog" class="nav-link">Статьи</a>
-            <a href="/#contact" class="nav-link">Контакты</a>
-        </nav>
-        <div class="header-actions">
-            <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
-                <span class="material-icons" id="theme-icon">dark_mode</span>
-            </button>
-            <button class="icon-btn md-only" aria-label="Menu">
-                <span class="material-icons">menu</span>
-            </button>
-        </div>
+  <div class="container">
+    <a href="/" class="logo">
+      <PlantIcon />
+      <span>Psychology Shitikz</span>
+    </a>
+
+    <!-- Десктопное меню -->
+    <nav class="nav">
+      <a href="/" class="nav-link">Главная</a>
+      <a href="/#education" class="nav-link">Образование</a>
+      <a href="/blog" class="nav-link">Статьи</a>
+      <a href="/#contact" class="nav-link">Контакты</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="theme-toggle" aria-label="Переключить тему">
+        <span class="icon-wrapper icon-dark">
+          <DarkModeIcon class="theme-icon" />
+        </span>
+        <span class="icon-wrapper icon-light">
+          <LightModeIcon class="theme-icon" />
+        </span>
+      </button>
+
+      <!-- Кнопка бургера с атрибутами доступности -->
+      <button
+        class="icon-btn md-only"
+        id="mobile-menu-btn"
+        aria-label="Открыть меню"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <MenuIcon />
+      </button>
     </div>
+  </div>
+
+  <!-- Мобильное меню (выпадающее) -->
+  <div class="mobile-menu" id="mobile-menu">
+    <nav class="mobile-nav">
+      <a href="/" class="nav-link">Главная</a>
+      <a href="/#education" class="nav-link">Образование</a>
+      <a href="/blog" class="nav-link">Статьи</a>
+      <a href="/#contact" class="nav-link">Контакты</a>
+    </nav>
+  </div>
 </header>
 
 <style>
-    .header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        height: 80px;
-        z-index: 1000;
-        background: rgba(var(--surface), 0.8);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--outline-variant);
-        display: flex;
-        align-items: center;
-    }
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1000;
+    background: rgba(var(--surface), 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--outline-variant);
+    display: flex;
+    align-items: center;
+  }
 
-    .header .container {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+  .header .container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-xs);
-        font-family: 'Manrope', sans-serif;
-        font-weight: 700;
-        font-size: 1.5rem;
-        color: var(--primary);
-    }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-family: var(--font-manrope), sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--primary);
+    text-decoration: none;
+  }
 
+  .nav {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
     .nav {
-        display: none;
+      display: flex;
+      gap: var(--spacing-lg);
     }
+  }
 
-    @media (min-width: 768px) {
-        .nav {
-            display: flex;
-            gap: var(--spacing-lg);
-        }
-    }
+  .nav-link {
+    color: var(--on-surface-variant);
+    font-weight: 500;
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition);
+    text-decoration: none;
+  }
 
-    .nav-link {
-        color: var(--on-surface-variant);
-        font-weight: 500;
-        padding: 4px 0;
-        border-bottom: 2px solid transparent;
-        transition: var(--transition);
-    }
+  .nav-link:hover {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
 
-    .nav-link:hover {
-        color: var(--primary);
-        border-bottom-color: var(--primary);
-    }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
 
-    .header-actions {
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-    }
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--on-surface-variant);
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+  }
 
-    .icon-btn {
-        width: 40px;
-        height: 40px;
-        border-radius: var(--radius-md);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: transparent;
-        color: var(--on-surface-variant);
-        cursor: pointer;
-        transition: var(--transition);
-    }
+  .icon-btn:hover {
+    background: var(--surface-container-low);
+  }
 
-    .icon-btn:hover {
-        background: var(--surface-container-low);
-    }
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    @media (min-width: 768px) {
-        .md-only {
-            display: none;
-        }
+  .theme-icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  .icon-dark {
+    display: none;
+  }
+
+  .icon-light {
+    display: flex;
+  }
+
+  :global([data-theme="dark"]) .icon-dark {
+    display: flex;
+  }
+
+  :global([data-theme="dark"]) .icon-light {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .md-only {
+      display: none;
     }
+  }
+
+  /* --- Стили для мобильного меню --- */
+  .mobile-menu {
+    position: fixed;
+    top: 80px; /* Высота хедера */
+    left: 0;
+    width: 100%;
+    /* background: rgba(var(--surface), 0.95); */
+    background-color: var(--surface);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--outline-variant);
+    padding: var(--spacing-md);
+    z-index: 999;
+
+    /* Скрытое состояние */
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+  }
+
+  .mobile-menu.is-open {
+    /* Видимое состояние */
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .mobile-nav .nav-link {
+    font-size: 1.125rem;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--outline-variant);
+    display: block;
+  }
+
+  .mobile-nav .nav-link:last-child {
+    border-bottom: none;
+  }
 </style>
+
+<script>
+  // Скрипт выполняется один раз при загрузке страницы (Astro hoists scripts)
+  const menuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  if (menuBtn && mobileMenu) {
+    const toggleMenu = () => {
+      const isOpen = mobileMenu.classList.toggle("is-open");
+      menuBtn.setAttribute("aria-expanded", isOpen.toString());
+      menuBtn.setAttribute(
+        "aria-label",
+        isOpen ? "Закрыть меню" : "Открыть меню",
+      );
+    };
+
+    // 1. Открытие/закрытие по клику на кнопку
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Предотвращаем немедленное срабатывание document click
+      toggleMenu();
+    });
+
+    // 2. Закрытие при клике вне области меню
+    document.addEventListener("click", (e) => {
+      if (
+        mobileMenu.classList.contains("is-open") &&
+        !mobileMenu.contains(e.target) &&
+        !menuBtn.contains(e.target)
+      ) {
+        mobileMenu.classList.remove("is-open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.setAttribute("aria-label", "Открыть меню");
+      }
+    });
+
+    // 3. Закрытие по нажатию клавиши Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && mobileMenu.classList.contains("is-open")) {
+        mobileMenu.classList.remove("is-open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.setAttribute("aria-label", "Открыть меню");
+      }
+    });
+
+    // 4. Закрытие меню при клике на любую ссылку внутри него (удобно для якорей)
+    mobileMenu.querySelectorAll(".nav-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("is-open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.setAttribute("aria-label", "Открыть меню");
+      });
+    });
+  }
+</script>

@@ -1,340 +1,293 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import EducationCard from '../components/EducationCard.astro';
-import PostCard from '../components/PostCard.astro';
-import SocialCard from '../components/SocialCard.astro';
+import Layout from "../layouts/Layout.astro";
+import PostCard from "../components/PostCard.astro";
+import SocialCard from "../components/SocialCard.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 
-const education = [
-    {
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCaF-3Zsnjb5pjkPfviEHLnoPRy8C_BIFn3-eLjaf_gMw14K5qkJmjNzTDHrKDvJ-wQHep4W_6kQh9OV6-HJN24KQOKdUYDCY3yv2ceneGVo3QiSwy7BNgahxfSAH3w_NAHlxcRhVHIgYpqcV3bcBPVW23DyU0iPANJblztuz0ZIegw0BMGlneEKSouRgd5tzPHwpWPL9xtT7aASP9UCFy4vQ-NHbyF0MoipTU3L8fpp2wg2iP6JwsVCcvjbApDCSEiqWrKIehZ2fY",
-        title: "Клиническая психология",
-        subtitle: "МГУ им. М.В. Ломоносова",
-        date: "2012 — 2017"
-    },
-    {
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAl395b3CBQh-Q1OXg6E401xeiP2h8ottc7lME3rJPul7QllD8BheaP0-O5FkaAu0lOYTDiSZpmK1sliUOwscpOzCadFsiSW7cZi33oDWYKrfUeEodWD-RCB7d8cakMe8hFbLSgGi8eBkEZWo2n4iqmXel4Zi-TZTETYSGQE3Koqeefr7xqOaWTZwAKZ7rD7iX9J1tcIJGXvlEmVlu2NZGgYJlSgdlPqw5R47JE_bT2BC3EoUskg2cbcU9o6xL03o7PqO0VZeDVKdk",
-        title: "Гештальт-терапия",
-        subtitle: "Московский Институт Гештальта",
-        date: "2018 — 2020"
-    },
-    {
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDxz5M7171-Wy9ikWIv-WF5HwK_6A1mO-gP_mIGsKbxuI5IDKunCiLRfFQttc34qjZgEtDSdVxF6yFXjcv80THod05iBTkeSmQqHNzZDVzEmev_fBy_UDkUrlLpY0AFqQWj4CizF0ndbctFMBzvUmqMB2KmYTZBpXWpvIkQJyyRtGN-aHqOWSe6yoHjIcmDSbS0bEcvY_-siAoEs-K_CpD7BPGqLpred-GqFn8KO39zZbmAY1XZCoStck_gVFAbqhWJH30sIExzXpo",
-        title: "КПТ практика",
-        subtitle: "Институт Бека (USA)",
-        date: "2021 — 2022"
-    }
-];
+import portrait from "../assets/images/portrait.jpg";
+import Education from "../components/Education.astro";
 
-const posts = [
-    {
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBMltyRF28HX93lTPee2pamTyLaiNEu2XQhwr0r0Mfh6V0KVRxxDOG4FYvZ3kIm7UzM0wcfsEvHI8cnfC47PUu9iffWVdDc6ka2a9mVYrw2IIdXVo9wcWNm5qLROZzLzMQZtMDZhkNu-9dofkzZDKkLQCkVtz4xoVTXgE3By81ldAms-TYUc47iZIyy3lGoz2y5b0VEqmFVDq_75rDP_ujtruU4zO21N0kPixZzZzs3dc1YQamD-B7Z0se3Lh9S7qJDA35V92Y91SM",
-        date: "12 Мая 2024",
-        title: "Как справиться с тревогой в мегаполисе",
-        description: "В современном ритме города тревожность становится частым спутником. Разбираем 5 простых техник...",
-        href: "/post",
-        horizontal: true
-    },
-    {
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuATVLLMTgmUwPFHpcotFmwrpxXYLbF7kkRBTnD-y_4Q4XSr18S0Py8Hn_1qBKHB1Ce1lcHo4VflrfxK1eDNnc_ELrIXW95cXArYzuaVhbrq0ve1aCOvrgsBKT-Rpdanfvhqteqe8otlOOjPmLqUl1vCvu6cB7fR3Jp-pKCwtL9y1X0qV7QlZQ8Y7c2gMh57IShqTX1w8zNRp4_Ux4ubLIb8lZ3crqOkflb7UfUNFFtPXCKBzvv1heK10HF4Ph9m8_kA2YMeUUSVx4E",
-        date: "5 Апреля 2024",
-        title: "Личные границы в отношениях",
-        description: "Почему говорить «нет» — это не про эгоизм, а про любовь к себе и партнеру. Учимся выстраивать здоровое общение...",
-        href: "/post",
-        horizontal: true
-    }
-];
+import ChevronRight from "../assets/icons/chevron-right.svg";
 
-const socialCards = [
-    {
-        icon: "send",
-        title: "Telegram",
-        login: "@anna_psy",
-        description: "Самый быстрый способ получить ответ.",
-        href: "#"
-    },
-    {
-        icon: "call",
-        title: "Телефон",
-        login: "+7 (900) 123-45-67",
-        description: "Доступна в WhatsApp и Telegram.",
-        href: "tel:+79001234567"
-    },
-    {
-        icon: "chat",
-        title: "ВКонтакте",
-        login: "vk.com/anna_violet",
-        description: "Полезные посты и живое общение.",
-        href: "#"
-    },
-    {
-        icon: "mail",
-        title: "Email",
-        login: "mail@example.com",
-        description: "Для официальных запросов и документов.",
-        href: "mailto:mail@example.com"
-    }
-];
+import { socialCards } from "../data/socials";
+
+const posts = await getCollection("posts");
 ---
 
-<Layout title="Calm Psychology Violet | Личный психолог">
-    <main>
-        <!-- Hero Section -->
-        <section class="section">
-            <div class="container">
-                <div class="hero">
-                    <div class="hero-content">
-                        <p class="hero-tag">Практикующий психолог</p>
-                        <h1 class="hero-title">Ваш путь к внутреннему спокойствию</h1>
-                        <div class="hero-description">
-                            <p>Меня зовут Анна Романовна, и я помогаю найти выход из сложных жизненных ситуаций через бережную терапию и осознанность. Мой подход основан на эмпатии и профессиональной поддержке, создавая безопасное пространство для ваших изменений.</p>
-                            <br>
-                            <p>Вместе мы проработаем тревожные состояния, наладим отношения с близкими и вернем уверенность в завтрашнем дне.</p>
-                        </div>
-                        <a href="#contact" class="btn btn-primary">Записаться на консультацию</a>
-                    </div>
-                    <div class="hero-image-container">
-                        <div class="hero-image-bg"></div>
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo6-A8NC9wm_tuWGaKeiFpdp_mJyupV3xfVnURBpKoI6wPrJCanaEpj8HcBG9XzK0Ih_vmMHnGF_SYN9D9gETETH1GaBDOPV1hu3j5amcKjJ083BCyWPEv24ekjPlag_X7R1-It4SIyUIC1nig4s7E72S7RUsrFB28vnoK7QFUhalDLcDdjs4R397qYSHNG7SviiNigc9jWjlNBYizqy34oTRwhoegOiyZT5NmWowjC_QqbGJnxe7MbY_7kVd5pVrOGTUew4yjNQI" alt="Портрет психолога Анны Романовны" class="hero-image">
-                    </div>
-                </div>
+<Layout title="Psychology Shitikz | Личный психолог">
+  <main>
+    <!-- Hero Section -->
+    <section class="section">
+      <div class="container">
+        <div class="hero">
+          <div class="hero-content">
+            <p class="hero-tag">Практикующий психолог</p>
+            <h1 class="hero-title">
+              Ваш путь к внутреннему спокойствию и саморазвитию
+            </h1>
+            <div class="hero-description">
+              <p>
+                Меня зовут Олеся Климова, я практический психолог и консультант
+                по методике PSY2.0. Помогаю людям находить и устранять глубинные
+                причины эмоциональных и психосоматических проблем.
+              </p>
+              <br />
+              <p>
+                В своей работе использую современный подход, основанный на
+                тесной взаимосвязи психики и тела. Ко мне обращаются с
+                тревожностью, страхами, паническими атаками, эмоциональным
+                выгоранием, сложностями в отношениях, психосоматическими
+                симптомами, а также с вопросами самореализации и поиска
+                внутренних ресурсов.
+              </p>
+              <br />
             </div>
-        </section>
 
-        <!-- Education Section -->
-        <section class="section" id="education" style="background: var(--surface-container-low);">
-            <div class="container">
-                <h2>Образование и квалификация</h2>
-                <div class="card-grid">
-                    {education.map(item => (
-                        <EducationCard {...item} />
-                    ))}
-                </div>
-            </div>
-        </section>
+            <a href="#contact" class="btn btn-primary"
+              >Записаться на консультацию</a
+            >
+          </div>
+          <div class="hero-image-container">
+            <div class="hero-image-bg"></div>
 
-        <!-- Latest Posts Section -->
-        <section class="section" id="posts">
-            <div class="container">
-                <div class="posts-header">
-                    <div>
-                        <h2>Последние публикации</h2>
-                        <p class="section-subtitle">Полезные материалы о ментальном здоровье</p>
-                    </div>
-                    <a href="/blog" class="blog-link">Все статьи <span class="material-icons">chevron_right</span></a>
-                </div>
-                <div class="blog-grid">
-                    {posts.map(post => (
-                        <PostCard {...post} />
-                    ))}
-                </div>
-            </div>
-        </section>
+            <Image
+              src={portrait}
+              alt="Портрет психолога Олеси Климовой"
+              class="hero-image"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Contact Section -->
-        <section class="section" id="contact">
-            <div class="container">
-                <div class="contact-container">
-                    <div class="contact-info">
-                        <h2>Связаться со мной</h2>
-                        <p class="hero-description">Оставьте заявку или воспользуйтесь социальными сетями для быстрой связи. Я помогу вам выбрать формат и время консультации.</p>
-                        
-                        <div class="social-contact-grid">
-                            {socialCards.map(card => (
-                                <SocialCard {...card} />
-                            ))}
-                        </div>
-                    </div>
-                    <form class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Имя</label>
-                            <input type="text" id="name" class="form-control" placeholder="Как к вам обращаться?">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="phone">Телефон</label>
-                                <input type="tel" id="phone" class="form-control" placeholder="+7 (...)">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" class="form-control" placeholder="mail@example.com">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Ваш вопрос</label>
-                            <textarea id="message" class="form-control" rows="4" placeholder="Кратко опишите вашу ситуацию"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Отправить заявку</button>
-                        <p class="form-footer-tip">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности.</p>
-                    </form>
-                </div>
+    <!-- Education Section -->
+    <!-- <section
+      class="section"
+      id="education"
+      style="background: var(--surface-container-low);"
+    >
+      <div class="container">
+        <h2>Образование и квалификация</h2>
+        <div class="card-grid">
+          {education.map((item) => <EducationCard {...item} />)}
+        </div>
+      </div>
+    </section> -->
+
+    <Education />
+
+    <!-- Latest Posts Section -->
+    <section class="section" id="posts">
+      <div class="container">
+        <div class="posts-header">
+          <div>
+            <h2>Последние публикации</h2>
+            <p class="section-subtitle">
+              Полезные материалы о ментальном здоровье
+            </p>
+          </div>
+          <a href="/blog" class="blog-link">Все статьи <ChevronRight /></a>
+        </div>
+
+        <div class="blog-grid">
+          {
+            posts.map((post) => (
+              <PostCard {...post.data} id={post.id} content={post.body} />
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-container">
+          <div class="contact-info">
+            <h2>Связаться со мной</h2>
+            <!-- <p class="hero-description">
+              Оставьте заявку или воспользуйтесь социальными сетями для быстрой
+              связи. Я помогу вам выбрать формат и время консультации.
+            </p> -->
+
+            <div class="social-contact-grid">
+              {socialCards.map((card) => <SocialCard {...card} />)}
             </div>
-        </section>
-    </main>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
 
 <style>
-    /* Section specific styles */
+  /* Section specific styles */
+  .hero {
+    display: grid;
+    gap: var(--spacing-lg);
+    align-items: center;
+    padding-top: var(--spacing-xl);
+  }
+
+  @media (min-width: 768px) {
     .hero {
-        padding-top: calc(80px + var(--spacing-xl));
-        display: grid;
-        gap: var(--spacing-lg);
-        align-items: center;
+      padding-top: calc(80px + var(--spacing-xl));
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--spacing-xl);
     }
+  }
 
-    @media (min-width: 768px) {
-        .hero {
-            grid-template-columns: 1.2fr 1fr;
-            gap: var(--spacing-xl);
-        }
-    }
+  .hero-tag {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+    margin-bottom: var(--spacing-sm);
+  }
 
-    .hero-tag {
-        font-size: 0.875rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--primary);
-        margin-bottom: var(--spacing-sm);
-    }
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: var(--spacing-md);
+  }
 
-    .hero-title {
-        font-size: clamp(2rem, 5vw, 3rem);
-        margin-bottom: var(--spacing-md);
-    }
+  .hero-description {
+    font-size: 1.125rem;
+    color: var(--on-surface-variant);
+    margin-bottom: var(--spacing-lg);
+    max-width: 540px;
+  }
 
-    .hero-description {
-        font-size: 1.125rem;
-        color: var(--on-surface-variant);
-        margin-bottom: var(--spacing-lg);
-        max-width: 540px;
-    }
+  .hero-image-container {
+    position: relative;
+  }
 
-    .hero-image-container {
-        position: relative;
-    }
+  .hero-image {
+    width: 100%;
+    max-height: 743px;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px var(--shadow-color);
+    border: 1px solid var(--outline-variant);
+  }
 
-    .hero-image {
-        width: 100%;
-        aspect-ratio: 4/5;
-        object-fit: cover;
-        border-radius: var(--radius-lg);
-        box-shadow: 0 20px 40px var(--shadow-color);
-        border: 1px solid var(--outline-variant);
-    }
+  .hero-image-bg {
+    position: absolute;
+    inset: -20px;
+    background: var(--primary);
+    opacity: 0.05;
+    filter: blur(40px);
+    z-index: -1;
+  }
 
-    .hero-image-bg {
-        position: absolute;
-        inset: -20px;
-        background: var(--primary);
-        opacity: 0.05;
-        filter: blur(40px);
-        z-index: -1;
-    }
+  .section-subtitle {
+    color: var(--on-surface-variant);
+  }
 
-    .section-subtitle {
-        color: var(--on-surface-variant);
-    }
+  .posts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--spacing-lg);
+  }
 
-    .posts-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        margin-bottom: var(--spacing-lg);
-    }
+  .blog-grid {
+    display: grid;
+    gap: var(--spacing-lg);
+  }
 
+  @media (min-width: 768px) {
     .blog-grid {
-        display: grid;
-        gap: var(--spacing-lg);
+      grid-template-columns: 1fr;
     }
+  }
 
-    @media (min-width: 768px) {
-        .blog-grid {
-            grid-template-columns: 1fr;
-        }
-    }
+  /* Contact Section */
+  .contact-container {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    display: grid;
+    gap: var(--spacing-xl);
+    box-shadow: 0 10px 30px var(--shadow-color);
+  }
 
-    /* Contact Section */
+  @media (min-width: 1024px) {
     .contact-container {
-        background: var(--surface-container-lowest);
-        border: 1px solid var(--outline-variant);
-        border-radius: var(--radius-lg);
-        padding: var(--spacing-lg);
-        display: grid;
-        gap: var(--spacing-xl);
-        box-shadow: 0 10px 30px var(--shadow-color);
+      /* grid-template-columns: 1fr 1fr; */
+      padding: var(--spacing-xl);
     }
+  }
 
-    @media (min-width: 1024px) {
-        .contact-container {
-            grid-template-columns: 1fr 1fr;
-            padding: var(--spacing-xl);
-        }
-    }
+  .contact-info h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: var(--spacing-md);
+  }
 
-    .contact-info h2 {
-        font-size: clamp(2rem, 4vw, 3rem);
-        margin-bottom: var(--spacing-md);
-    }
+  .social-contact-grid {
+    display: grid;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+  }
 
+  @media (min-width: 830px) {
     .social-contact-grid {
-        display: grid;
-        gap: var(--spacing-md);
-        margin-top: var(--spacing-lg);
+      grid-template-columns: repeat(2, 1fr);
     }
+  }
 
-    @media (min-width: 640px) {
-        .social-contact-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
+  /* Form */
+  .contact-form {
+    display: grid;
+    gap: var(--spacing-md);
+  }
 
-    /* Form */
-    .contact-form {
-        display: grid;
-        gap: var(--spacing-md);
-    }
+  .form-group {
+    display: grid;
+    gap: 4px;
+  }
 
-    .form-group {
-        display: grid;
-        gap: 4px;
-    }
+  .form-group label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--on-surface-variant);
+    margin-left: var(--spacing-xs);
+  }
 
-    .form-group label {
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--on-surface-variant);
-        margin-left: var(--spacing-xs);
-    }
+  .form-control {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--input-bg);
+    border: 1px solid transparent;
+    transition: var(--transition);
+    color: var(--on-surface);
+  }
 
-    .form-control {
-        width: 100%;
-        padding: 1rem 1.5rem;
-        border-radius: var(--radius-lg);
-        background: var(--input-bg);
-        border: 1px solid transparent;
-        transition: var(--transition);
-        color: var(--on-surface);
-    }
+  .form-control:focus {
+    border-color: var(--primary);
+    background: var(--surface-container-lowest);
+  }
 
-    .form-control:focus {
-        border-color: var(--primary);
-        background: var(--surface-container-lowest);
-    }
+  .form-row {
+    display: grid;
+    gap: var(--spacing-md);
+  }
 
+  @media (min-width: 640px) {
     .form-row {
-        display: grid;
-        gap: var(--spacing-md);
+      grid-template-columns: 1fr 1fr;
     }
+  }
 
-    @media (min-width: 640px) {
-        .form-row {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    .form-footer-tip {
-        text-align: center;
-        font-size: 0.75rem;
-        color: var(--on-surface-variant);
-    }
+  .form-footer-tip {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--on-surface-variant);
+  }
 </style>
