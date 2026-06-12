@@ -28,6 +28,17 @@ const {
   description,
   horizontal = false,
 } = Astro.props;
+
+// Извлекаем части даты по UTC, чтобы избежать сдвига часовых поясов
+const day = String(pubDate.getUTCDate()).padStart(2, "0");
+const month = String(pubDate.getUTCMonth() + 1).padStart(2, "0");
+const year = pubDate.getUTCFullYear();
+
+// Собираем строку в формате dd.mm.yyyy
+const formattedDate = `${day}.${month}.${year}`;
+
+// Формируем строку для атрибута datetime (YYYY-MM-DD)
+const isoDate = `${year}-${month}-${day}`;
 ---
 
 <Layout title={title}>
@@ -36,7 +47,10 @@ const {
       <div class="container post-content">
         <header class="post-header">
           <div class="post-meta">
-            <span>{new Date(pubDate).toLocaleDateString()}</span>
+            <!-- <span>{new Date(pubDate).toLocaleDateString()}</span> -->
+            <time class="card-date" datetime={isoDate}>
+              {formattedDate}
+            </time>
             <!-- <span>•</span>
             <span>tag???</span> -->
           </div>

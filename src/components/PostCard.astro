@@ -28,6 +28,17 @@ const {
   horizontal = false,
   content,
 } = Astro.props;
+
+// Извлекаем части даты по UTC, чтобы избежать сдвига часовых поясов
+const day = String(pubDate.getUTCDate()).padStart(2, "0");
+const month = String(pubDate.getUTCMonth() + 1).padStart(2, "0");
+const year = pubDate.getUTCFullYear();
+
+// Собираем строку в формате dd.mm.yyyy
+const formattedDate = `${day}.${month}.${year}`;
+
+// Формируем строку для атрибута datetime (YYYY-MM-DD)
+const isoDate = `${year}-${month}-${day}`;
 ---
 
 <article class={`blog-card ${horizontal ? "horizontal" : ""}`}>
@@ -41,14 +52,15 @@ const {
   </div>
   <div class="blog-card-content">
     <div>
-      <span class="card-date">{new Date(pubDate).toLocaleDateString()}</span>
+      <!-- <span class="card-date">{new Date(pubDate).toLocaleDateString()}</span> -->
+      <time class="card-date" datetime={isoDate}>
+        {formattedDate}
+      </time>
       <h3>{title}</h3>
       <!-- <p class="card-subtitle">{description}</p> -->
       <p class="card-subtitle">{content?.slice(0, 200)}...</p>
     </div>
-    <a href={"/blog/" + id} class="blog-link"
-      >Читать далее</a
-    >
+    <a href={"/blog/" + id} class="blog-link">Читать далее</a>
   </div>
 </article>
 
