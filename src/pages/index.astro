@@ -13,6 +13,12 @@ import ChevronRight from "../assets/icons/chevron-right.svg";
 import { socialCards } from "../data/socials";
 
 const posts = await getCollection("posts");
+const recentPosts = [...posts]
+  .sort(
+    (a, b) =>
+      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime(),
+  )
+  .slice(0, 3);
 ---
 
 <Layout title="Psychology Shitikz | Психолог">
@@ -94,7 +100,7 @@ const posts = await getCollection("posts");
 
         <div class="blog-grid">
           {
-            posts.map((post) => (
+            recentPosts.map((post) => (
               <PostCard {...post.data} id={post.id} content={post.body} />
             ))
           }
