@@ -3,7 +3,7 @@ title: "Терапевтическое пространство: ответ"
 # description: description text
 # cover: 
 # coverAlt: alt text
-pubDate: 2026-06-13
+pubDate: 2026-06-14
 ---
 
 На одной из моих соц.сетей был вопрос:
