@@ -1,6 +1,10 @@
 import { defineConfig, fontProviders } from "astro/config";
 
+import sitemap from '@astrojs/sitemap';
+
 export default defineConfig({
+  site: 'https://shitikzl.github.io',
+  integrations: [sitemap()],
   fonts: [
     //   {
     //   provider: fontProviders.fontsource(),
@@ -103,5 +107,6 @@ export default defineConfig({
         ]
       }
     }
-  ]
+  ],
+
 });

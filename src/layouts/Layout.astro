@@ -9,8 +9,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Psychology Shitikz - Психолог" } =
-  Astro.props;
+const { title, description = "Psychology Shitikz - Психолог" } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,6 +18,7 @@ const { title, description = "Psychology Shitikz - Психолог" } =
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
