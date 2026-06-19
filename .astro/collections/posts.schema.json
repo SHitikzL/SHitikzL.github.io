@@ -8,11 +8,18 @@
     "description": {
       "type": "string"
     },
+    "showDescription": {
+      "default": true,
+      "type": "boolean"
+    },
     "cover": {
       "type": "string"
     },
     "coverAlt": {
       "type": "string"
+    },
+    "coverInPost": {
+      "type": "boolean"
     },
     "pubDate": {
       "type": "string",
@@ -21,6 +28,17 @@
     "updatedDate": {
       "type": "string",
       "format": "date-time"
+    },
+    "video": {
+      "type": "object",
+      "properties": {
+        "youtube": {
+          "type": "string"
+        },
+        "vk": {
+          "type": "string"
+        }
+      }
     },
     "$schema": {
       "type": "string"

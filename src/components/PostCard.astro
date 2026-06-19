@@ -1,22 +1,6 @@
 ---
 import { Image } from "astro:assets";
-
-interface Props {
-  id: string;
-  cover?: Cover;
-  coverAlt?: string;
-  pubDate: Date;
-  title: string;
-  description?: string;
-  horizontal?: boolean;
-  content?: string;
-}
-interface Cover {
-  src: string;
-  width: number;
-  height: number;
-  format: "png" | "jpg" | "jpeg" | "tiff" | "webp" | "gif" | "svg" | "avif";
-}
+import { PostProps as Props } from "./blog/types";
 
 const {
   id,
@@ -25,6 +9,7 @@ const {
   pubDate,
   title,
   description,
+  showDescription,
   horizontal = false,
   content,
 } = Astro.props;
@@ -58,7 +43,11 @@ const isoDate = `${year}-${month}-${day}`;
       </time>
       <h3>{title}</h3>
       <!-- <p class="card-subtitle">{description}</p> -->
-      <p class="card-subtitle">{content?.slice(0, 200)}...</p>
+      {
+        showDescription && (
+          <p class="card-subtitle">{content?.slice(0, 200)}...</p>
+        )
+      }
     </div>
     <a href={"/blog/" + id} class="blog-link">Читать далее</a>
   </div>
