@@ -12,12 +12,14 @@ const posts = defineCollection({
       cover: image().optional(),
       coverAlt: z.string().optional(),
       coverInPost: z.boolean().optional(),
+      horizontal: z.boolean().default(false),
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
       video: z
         .object({
           youtube: z.string().optional(),
           vk: z.string().optional(),
+          b17: z.string().optional(),
         })
         .optional(),
     }),

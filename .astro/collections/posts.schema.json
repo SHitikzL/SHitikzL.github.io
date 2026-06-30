@@ -21,6 +21,10 @@
     "coverInPost": {
       "type": "boolean"
     },
+    "horizontal": {
+      "default": false,
+      "type": "boolean"
+    },
     "pubDate": {
       "type": "string",
       "format": "date-time"
@@ -36,6 +40,9 @@
           "type": "string"
         },
         "vk": {
+          "type": "string"
+        },
+        "b17": {
           "type": "string"
         }
       }
