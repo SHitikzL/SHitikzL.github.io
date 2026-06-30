@@ -4,6 +4,11 @@ interface Props {
   vkUrl?: string;
   b17Url?: string;
 }
+type Tab = {
+  id: string;
+  title: string;
+  url: string;
+};
 
 const { youtubeUrl, vkUrl, b17Url } = Astro.props;
 
@@ -23,32 +28,37 @@ const tabs = [
     title: "B17 Video",
     url: b17Url,
   },
-].filter(Boolean);
+].filter((tab): tab is Tab => Boolean(tab));
 
 const activeTab = tabs[0]?.id;
 ---
 
 {
-  (tabs.length > 1 && (
+  tabs.length > 0 && (
     <div class="video-tabs">
-      <div class="video-tabs__header">
-        {tabs.map((tab) => (
-          <button
-            class:list={[
-              "video-tabs__button",
-              tab.id === activeTab && "active",
-            ]}
-            data-tab={tab.id}
-            type="button"
-          >
-            {tab.title}
-          </button>
-        ))}
-      </div>
+      {tabs.length > 1 && (
+        <div class="video-tabs__header">
+          {tabs.map((tab) => (
+            <button
+              class:list={[
+                "video-tabs__button",
+                tab.id === activeTab && "active",
+              ]}
+              data-tab={tab.id}
+              type="button"
+            >
+              {tab.title}
+            </button>
+          ))}
+        </div>
+      )}
 
       {tabs.map((tab) => (
         <div
-          class:list={["video-pane", tab.id === activeTab && "active"]}
+          class:list={[
+            "video-pane",
+            (tabs.length === 1 || tab.id === activeTab) && "active",
+          ]}
           data-pane={tab.id}
         >
           <div class="video-wrapper">
@@ -62,27 +72,7 @@ const activeTab = tabs[0]?.id;
         </div>
       ))}
     </div>
-  )) ||
-    (tabs.length == 1 && (
-      <div class="video-tabs">
-
-        {tabs.map((tab) => (
-          <div
-            class:list={["video-pane", tab.id === activeTab && "active"]}
-            data-pane={tab.id}
-          >
-            <div class="video-wrapper">
-              <iframe
-                src={tab.url}
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-    ))
+  )
 }
 
 <script>

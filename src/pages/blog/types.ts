@@ -11,6 +11,7 @@ export interface PostProps {
   video?: {
     youtube?: string;
     vk?: string;
+    b17?: string;
   };
 }
 interface Cover {
